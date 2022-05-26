@@ -1,0 +1,5 @@
+/media/images/*.jpg
+/media/images/*.jpeg
+.*.pyc
+.vscode
+__pycache__
