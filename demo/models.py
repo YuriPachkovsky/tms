@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib import admin
+from ckeditor.fields import RichTextField
 
 
 class BaseContent(models.Model):
@@ -16,10 +16,13 @@ class TextPost(BaseContent):
 
     image_content = models.ImageField(upload_to='images', null=True, blank=True)
     author = models.ForeignKey('Author', on_delete=models.CASCADE)
-    content = models.TextField()
+    content = RichTextField(blank=True, null=True)
 
     def __str__(self):
         return self.title
+
+    def base_content(self):
+        return self.content[:50]
 
 
 class Author(models.Model):
@@ -28,6 +31,3 @@ class Author(models.Model):
 
     def __str__(self):
         return self.name
-
-admin.site.register(TextPost)
-admin.site.register(Author)

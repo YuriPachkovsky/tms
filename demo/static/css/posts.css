@@ -1,0 +1,4 @@
+.inline_element {
+  display: flex;
+  justify-content: space-between;
+}
