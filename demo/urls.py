@@ -3,10 +3,9 @@ from demo.views import *
 
 
 urlpatterns = [
-    path('main/', main),
-    path('posts/', posts),
-    path('add/', add_post),
+    path('posts/', PostListView.as_view()),
+    path('add/', PostCreateView.as_view()),
     path('delete/<int:id>', delete_post),
-    path('edit/<int:id>', edit_post),
+    path('edit/<int:pk>', PostEditView.as_view()),
 ]
 

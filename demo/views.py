@@ -3,48 +3,32 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from .models import TextPost
 from .forms import PostForm
-
-def main(request):
-    posts = TextPost.objects.all()
-    return render(request, 'base.html', {'posts': posts})
-
-
-def posts(request):
-    posts = TextPost.objects.all()
-    return render(request, 'posts.html', {'posts': posts})
-
-def add_post(request):
-    # if this is a POST request we need to process the form data
-    if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = PostForm(request.POST, request.FILES)
-        # check whether it's valid:
-        if form.is_valid():
-
-            # process the data in form.cleaned_data as required
-            # ...
-            # redirect to a new URL:
-            form.save()
-            return HttpResponseRedirect('/demo/posts')
-
-    # if a GET (or any other method) we'll create a blank form
-    else:
-        form = PostForm()
-
-    return render(request, 'add_posts.html', {'form': form})
-
-def edit_post(request, id):
-    post = TextPost.objects.get(id=id)
-    if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES, instance=post)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/demo/posts')
-    else:
-        form = PostForm(instance=post)
-    return render(request, 'edit_post.html', {'form': form})
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import UpdateView, DeleteView, CreateView, FormView
 
 
+class PostListView(ListView):
+    model = TextPost
+    template_name = 'posts.html'
+    context_object_name = 'posts'
+
+class PostEditView(UpdateView):
+    model = TextPost
+    template_name = 'edit_post.html'
+    form_class = PostForm
+    success_url = '/demo/posts'
+
+class PostCreateView(CreateView):
+    model = TextPost
+    template_name = 'add_post.html'
+    form_class = PostForm
+    success_url = '/demo/posts'
+
+class PostDeleteView(DeleteView):
+    model = TextPost
+    template_name = 'delete_post.html'
+    success_url = '/demo/posts'
 
 def delete_post(request, id):
     post = TextPost.objects.get(id=id)
