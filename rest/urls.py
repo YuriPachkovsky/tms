@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework import routers
-from rest_framework.authtoken import views
+from rest_framework import views
 from .views import *
 """ 
 router = routers.DefaultRouter()
