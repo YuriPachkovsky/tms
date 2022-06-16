@@ -46,10 +46,16 @@ INSTALLED_APPS = [
     'djoser',
     'rest_framework.authtoken',
     'django_filters',
+    'rest_framework_simplejwt',
     'demo',
     'corsheaders',
     'rest'
 ]
+
+{
+    "refresh": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY1NTQ5MDA2OSwianRpIjoiMjdlNWNhMWQxOTdmNDRhMjhiNGI2NjEzZjA1YTUzODciLCJ1c2VyX2lkIjoxfQ.rbAC29bCGAz7eSUz2CvRLn0aTlr9AssFKbuHWzEateY",
+    "access": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjU1NDAzOTY5LCJqdGkiOiI0ZGFmYjA4ODVmODc0ZWU1YWRkNmE4MTNjNzc5MzJhYSIsInVzZXJfaWQiOjF9.tHZfMQUh6Ulo9WcKu1Qqluldyfi9k3CIkclb4McCtXM"
+}
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -64,14 +70,38 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+BLACKLIST_AFTER_ROTATION = False
+
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ]
+}
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+
+SIMPLE_JWT = {
+   'AUTH_HEADER_TYPES': ('JWT',),
+}
+
+EMAIL_USE_TLS=True
+EMAIL_HOST="smtp.gmail.com"
+EMAIL_HOST_USER="yuri.pachkovsky@gmail.com"
+DEFAULT_FROM_EMAIL="yuri.pachkovsky@gmail.com"
+EMAIL_HOST_PASSWORD="anwcafzemrtaqyup"
+EMAIL_PORT=587
+
+DJOSER = {
+    'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': 'auth/users/activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'SERIALIZERS': {},
 }
 
 ROOT_URLCONF = 'myapp.urls'
