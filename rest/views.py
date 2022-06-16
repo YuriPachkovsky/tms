@@ -20,6 +20,9 @@ class UserViewSet(ListAPIView):
     search_fields = ['username','email']
     ordering_fields = ['username', 'email']
 
+    permission_classes = [IsAdminUser]
+
+
 class BookViewSet(ListCreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer

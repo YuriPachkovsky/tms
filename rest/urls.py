@@ -12,7 +12,3 @@ urlpatterns = [
     path('', UserViewSet.as_view()),
     path('book', BookViewSet.as_view()),
 ]
-
-urlpatterns += [
-    path('api-token-auth/', views.obtain_auth_token)
-]
